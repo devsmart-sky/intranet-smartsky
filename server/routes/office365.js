@@ -13,13 +13,14 @@ const tenantId = process.env.AZURE_TENANT_ID
 const clientId = process.env.AZURE_CLIENT_ID
 const clientSecret = process.env.AZURE_CLIENT_SECRET
 
-// const tenantIdUser = process.env.TENANT_ID
-// const clientIdUser = process.env.CLIENT_ID
-// const clientSecretUser = process.env.CLIENT_SECRET
+// ✅ DADOS DO USUÁRIO REGISTRADO NO AZURE
+const clientIdUser = process.env.IDCLIENTEUSUARIO
+const tenantIdUser = process.env.TENANTIDUSUARIO
+const clientSecretUser = process.env.INTRANETSECRETUSUARIO
 
 // 🔐 Função para obter token com as credenciais da aplicação
 async function getAccessToken() {
-  const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+  const credential = new ClientSecretCredential(tenantIdUser, clientIdUser, clientSecretUser);
   const tokenResponse = await credential.getToken('https://graph.microsoft.com/.default');
   return tokenResponse.token;
 }
