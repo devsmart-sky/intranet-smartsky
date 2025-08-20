@@ -165,11 +165,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
               })}
             </ul>
           </nav>
-                {/* Acessos rapidos */}
+          {/* Acessos rapidos */}
           <div className="p-4 border-t border-gray-700 mt-auto">
             <div className="mb-3">
               <div className="text-xl text-white space-y-1">
-                <center><label>Acessos rapidos</label></center>
+                <center>
+                  <label>Acessos rapidos</label>
+                </center>
                 <br />
                 <div className="flex items-center space-x-8 mt-4">
                   <div className="flex flex-col items-center">
@@ -181,7 +183,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <img
                         src="jira.png"
                         alt="Jira"
-                        className="w-16 h-16 object-contain hover:scale-105 transition-transform"
+                        className="w-12 h-16 object-contain hover:scale-105 transition-transform"
                         title="Abertura de chamados T.I"
                       />
                     </a>
@@ -197,7 +199,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <img
                         src="sienge.png"
                         alt="Sienge"
-                        className="w-16 h-16 object-contain hover:scale-105 transition-transform"
+                        className="w-20 h-16 object-contain hover:scale-105 transition-transform"
                         title="Sistema Sienge"
                       />
                     </a>
@@ -219,7 +221,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     </a>
                     <span className="text-sm mt-2">Flash</span>
                   </div>
-
                 </div>
               </div>
             </div>
