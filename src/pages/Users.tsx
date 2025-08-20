@@ -118,7 +118,7 @@ export const Users: React.FC = () => {
   const fetchUsuarios = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/usuarios`
+        `${import.meta.env.VITE_API_URL}/api/usuarios2`
       );
 
       const fetchedUsers = response.data.map((user: User) => ({
@@ -142,7 +142,7 @@ export const Users: React.FC = () => {
   const fetchFuncionariosEmail = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/usuarios/filtraFuncionario`
+        `${import.meta.env.VITE_API_URL}/api/usuarios2/filtraFuncionario`
       );
       if (Array.isArray(response.data)) {
         setFiltraFuncionarios(response.data);
@@ -186,7 +186,7 @@ export const Users: React.FC = () => {
 
       if (modalMode === "create") {
         const response = await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/usuarios`,
+          `${import.meta.env.VITE_API_URL}/api/usuarios2`,
           data,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -202,7 +202,7 @@ export const Users: React.FC = () => {
         showSuccessToast("Usuário criado com sucesso!");
       } else if (modalMode === "edit" && selectedUser) {
         const response = await axios.put(
-          `${import.meta.env.VITE_API_URL}/api/usuarios/${selectedUser.id}`,
+          `${import.meta.env.VITE_API_URL}/api/usuarios2/${selectedUser.id}`,
           data,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -274,7 +274,7 @@ export const Users: React.FC = () => {
     if (confirmed) {
       try {
         await axios.delete(
-          `${import.meta.env.VITE_API_URL}/api/usuarios/${id}`
+          `${import.meta.env.VITE_API_URL}/api/usuarios2/${id}`
         );
         showSuccessToast("Usuário excluído com sucesso!");
         fetchUsuarios(); // Atualiza a lista após excluir
@@ -292,7 +292,7 @@ export const Users: React.FC = () => {
     const newStatus = userToToggle.status === "Ativo" ? "Inativo" : "Ativo";
 
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/usuarios/${id}`, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/usuarios2/${id}`, {
         ...userToToggle, // Envia todos os dados existentes
         status: newStatus,
       });

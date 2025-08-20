@@ -175,7 +175,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <div className="text-xs text-gray-400 space-y-1">
                 <p>
                   Última atualização:
-                  <span className="text-white font-medium"> 12/08/2025 </span>
+                  <span className="text-white font-medium"> 20/08/2025 </span>
                 </p>
                 <p>
                   Versão: <span className="text-white font-medium"> v1.0</span>

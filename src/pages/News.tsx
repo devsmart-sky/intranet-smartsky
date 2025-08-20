@@ -116,7 +116,7 @@ export const NewsPage: React.FC = () => {
     } else if (modalMode === "edit" && selectedNews) {
       try {
         const response = await axios.put(
-          `${import.meta.env.VITE_API_URL}/noticias/${
+          `${import.meta.env.VITE_API_URL}/api/noticias/${
             selectedNews.id_noticias
           }`,
           {
@@ -157,7 +157,7 @@ export const NewsPage: React.FC = () => {
     if (confirmed) {
       try {
         const responde = await axios.delete(
-          `${import.meta.env.VITE_API_URL}/noticias/${id}`
+          `${import.meta.env.VITE_API_URL}/api/noticias/${id}`
         );
 
         if (responde.status === 200) {
@@ -188,7 +188,7 @@ export const NewsPage: React.FC = () => {
   const getNoticias = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/noticias`
+        `${import.meta.env.VITE_API_URL}/api/noticias`
       );
 
       setNews(response.data);
@@ -206,8 +206,8 @@ export const NewsPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Comunicados</h2>
-          <p className="text-gray-300">
+          {/* <h2 className="text-2xl font-bold text-white">Comunicados</h2> */}
+          <p className="text-2xl text-gray-300">
             Fique por dentro das últimas novidades
           </p>
         </div>

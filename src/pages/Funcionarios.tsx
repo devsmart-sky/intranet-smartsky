@@ -148,12 +148,12 @@ export const Funcionarios: React.FC = () => {
     fetchFuncionarios();
   }, []);
 
-  // Função para buscar cargos
+  // Função para buscar cargos e departamentos
   useEffect(() => {
     const fetchPositions = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/cargos`
+          `${import.meta.env.VITE_API_URL}/api/cargos`
         );
 
         setPositions(response.data);
@@ -163,10 +163,11 @@ export const Funcionarios: React.FC = () => {
       }
     };
 
+    // Função para buscar departamentos
     const fetchDepartments = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/departamentos`
+          `${import.meta.env.VITE_API_URL}/api/departamentos`
         );
         setDepartments(response.data);
       } catch (error) {
@@ -755,8 +756,10 @@ export const Funcionarios: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Colaboradores</h2>
-          <p className="text-gray-300">Gerencie os colaboradores da empresa</p>
+          {/* <h2 className="text-2xl font-bold text-white">Colaboradores</h2> */}
+          <p className="text-2xl text-gray-300">
+            Gerencie os colaboradores da empresa
+          </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           {/* <Button variant="secondary" icon={FileText} onClick={generatePDF}>

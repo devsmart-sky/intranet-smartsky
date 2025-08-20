@@ -90,13 +90,17 @@ export const Documents: React.FC = () => {
 
     try {
       if (modalMode === "create") {
-        await axios.post(`${import.meta.env.VITE_API_URL}/documento`, form, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/documento`,
+          form,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
         showSuccessToast("Documento criado com sucesso!");
       } else if (modalMode === "edit" && selectedDocument?.id_documento) {
         await axios.put(
-          `${import.meta.env.VITE_API_URL}/documento/${
+          `${import.meta.env.VITE_API_URL}/api/documento/${
             selectedDocument.id_documento
           }`,
           form,
@@ -126,7 +130,9 @@ export const Documents: React.FC = () => {
 
     if (confirmed) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/documento/${id}`);
+        await axios.delete(
+          `${import.meta.env.VITE_API_URL}/api/documento/${id}`
+        );
         setDocumentos((prev) => prev.filter((doc) => doc.id_documento !== id)); // Atualizar a lista de documentos();
         showSuccessToast("Documento excluído com sucesso!");
       } catch (error) {
@@ -188,7 +194,7 @@ export const Documents: React.FC = () => {
   const getDocuments = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/documento`
+        `${import.meta.env.VITE_API_URL}/api/documento`
       );
 
       const docsComUrls = response.data.map((doc: Document) => ({
@@ -233,8 +239,10 @@ export const Documents: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Documentos</h2>
-          <p className="text-gray-300">Gerencie os documentos da empresa</p>
+          {/* <h2 className="text-2xl font-bold text-white">Documentos</h2> */}
+          <p className="text-2xl text-gray-300">
+            Gerencie os documentos da empresa
+          </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <Button icon={Plus} onClick={() => openModal("create")}>

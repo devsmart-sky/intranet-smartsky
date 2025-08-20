@@ -65,39 +65,8 @@ async function verificarEmailExistente(email, id_funcionario) {
     return rows[0].count > 0;
 }
 
-// Função para verificar se email já existe em funcionários ou usuários
-// const verificarEmailExistente = async (email, excludeId = null) => {
-//   try {
-//     // Verifica na tabela funcionários
-//     let queryFuncionarios;
-//     let paramsFuncionarios;
-    
-//     if (excludeId) {
-//       queryFuncionarios = 'SELECT email FROM funcionarios WHERE email = ? AND id_funcionario != ?';
-//       paramsFuncionarios = [email, excludeId];
-//     } else {
-//       queryFuncionarios = 'SELECT email FROM funcionarios WHERE email = ?';
-//       paramsFuncionarios = [email];
-//     }
-    
-//     const [funcionarioExistente] = await db.query(queryFuncionarios, paramsFuncionarios);
-    
-//     // Verifica na tabela usuários
-//     const [usuarioExistente] = await db.query('SELECT email FROM usuarios WHERE email = ?', [email]);
-    
-//     return {
-//       funcionarioExiste: funcionarioExistente.length > 0,
-//       usuarioExiste: usuarioExistente.length > 0,
-//       emailExiste: funcionarioExistente.length > 0 || usuarioExistente.length > 0
-//     };
-//   } catch (error) {
-//     console.error('Erro ao verificar email:', error);
-//     throw error;
-//   }
-// };
-
 // Rota para Listar todos os funcionários
-router.get('/', async (req, res) => {
+router.get('/funcionarios', async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM view_funcionarios');
     res.json(rows);
@@ -108,7 +77,7 @@ router.get('/', async (req, res) => {
 });
 
 // Rota para Inserir funcionário
-router.post('/', upload.single('foto'), async (req, res) => {
+router.post('/funcionarios', upload.single('foto'), async (req, res) => {
   const criado = formatDateTimeForMySQL(new Date().toISOString());
 
   const {
@@ -218,7 +187,7 @@ router.post('/', upload.single('foto'), async (req, res) => {
 });
 
 // Rota para Atualizar funcionário
-router.put('/:id', upload.single('foto'), async (req, res) => {
+router.put('/funcionarios/:id', upload.single('foto'), async (req, res) => {
 
   const { id } = req.params;
   const alterado = formatDateTimeForMySQL(new Date().toISOString());
@@ -434,7 +403,7 @@ router.put('/:id', upload.single('foto'), async (req, res) => {
 });
 
 // Rota para Deletar funcionário
-router.delete('/:id', async (req, res) => {
+router.delete('/funcionarios/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -452,7 +421,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // ROTA PARA INSERIR USUARIO APOS CRIAÇÃO DO FUNCIONARIO
-router.post('/criaUsuario', async (req, res) => {
+router.post('/funcionarios/criaUsuario', async (req, res) => {
   const { name, email, role, permissions } = req.body;
   
   try {

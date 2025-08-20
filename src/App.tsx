@@ -22,22 +22,18 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     const processSSO = async () => {
       // Verifica se estamos na rota de SSO callback
-      const currentPath = window.location.pathname;
+      // const currentPath = window.location.pathname;
       const urlParams = new URLSearchParams(window.location.search);
       const userParam = urlParams.get("user");
       const errorParam = urlParams.get("error");
 
-      console.log("🔍 Verificando SSO...");
-      console.log("📍 Current path:", currentPath);
-      console.log("📋 URL params:", { userParam: !!userParam, errorParam });
+      // console.log("📍 Current path:", currentPath);
 
       // Se não há parâmetros SSO, não faz nada
       if (!userParam && !errorParam) {
-        console.log("ℹ️ Nenhum parâmetro SSO encontrado");
         return;
       }
 
-      console.log("🚀 Processando SSO...");
       setIsProcessingSSO(true);
 
       // Se há erro, redireciona para login

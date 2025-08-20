@@ -137,16 +137,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         formData.append("photo", data.photoFile);
       }
 
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/usuarios/${user.id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      // const response = await axios.put(
+      //   `${import.meta.env.VITE_API_URL}/api/usuarios/${user.id}`,
+      //   formData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //     },
+      //   }
+      // );
 
       const updatedUser = {
         ...user,
@@ -210,8 +210,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           jobTitle: "",
           department: "",
           mobilePhone: "",
-          businessPhones: ""
-        }
+          businessPhones: "",
+        },
       };
 
       // Tenta buscar dados adicionais do Office 365
@@ -232,10 +232,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               department: office365Data.department,
               mobilePhone: office365Data.mobilePhone,
               businessPhones: office365Data.businessPhones,
-            }
+            },
           };
 
-          console.log("Usuário enriquecido com dados do Office 365:", enrichedUser);
+          console.log(
+            "Usuário enriquecido com dados do Office 365:",
+            enrichedUser
+          );
           setUser(enrichedUser);
           localStorage.setItem("user", JSON.stringify(enrichedUser));
         } else {
@@ -244,7 +247,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           localStorage.setItem("user", JSON.stringify(authUser));
         }
       } catch (office365Error) {
-        console.warn("Erro ao buscar dados do Office 365, continuando apenas com dados locais:", office365Error);
+        console.warn(
+          "Erro ao buscar dados do Office 365, continuando apenas com dados locais:",
+          office365Error
+        );
         setUser(authUser);
         localStorage.setItem("user", JSON.stringify(authUser));
       }
@@ -254,7 +260,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       showSuccessToast("Login realizado com sucesso!");
       return { success: true };
-
     } catch (error: any) {
       const message = error?.response?.data?.message || "Erro ao fazer login";
       showErrorToast(message);

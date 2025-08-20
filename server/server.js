@@ -1,4 +1,5 @@
 require('dotenv').config({ path: __dirname + '/../.env' }); // para acessar o .env da raiz
+console.log('Ambiente:', process.env.NODE_ENV);
 console.log('CLIENT_SECRET:', process.env.AZURE_CLIENT_SECRET);
 
 const express = require('express');
@@ -7,63 +8,91 @@ const path = require('path');
 const cors = require('cors');
 const msal = require('@azure/msal-node');
 
-// app.use(cors());
+// ========================
+// CONFIGURAÇÃO CORS PARA LOCALHOST
+// ========================
+const corsOptions = {
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
 
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
+app.use(cors(corsOptions));
 app.use(express.json());
-// Configuração do CORS
-// const allowedOrigins = [
-//   '*'
-// ];
 
-// app.use(cors({
-//   origin: allowedOrigins, // Permite apenas essas origens
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-//   allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
-// }));
+// Middleware de log para debug
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
 
-// app.use(cors());
-// app.use(express.json());
-// app.use('/docs', express.static(path.join(__dirname, 'public/docs')));
+// ========================
+// ARQUIVOS ESTÁTICOS
+// ========================
 app.use('/docs', (req, res, next) => {
   req.url = decodeURIComponent(req.url); 
   express.static(path.join(__dirname, 'public', 'docs'))(req, res, next);
 });
 app.use('/uploads', express.static('uploads'));
 
+// ========================
+// ROTAS DA API
+// ========================
+// Office 365
+const office = require('./routes/office365');
+app.use('/api', office); // Para /api/singleSignon
+app.use('/', office);    // Para callback do Azure na raiz
 
-const office = require('./routes/office365')
-app.use('/', office)
-
-// Outras rotas da aplicação
+// Outras rotas da API com prefixo /api
 const authRoutes = require('./routes/auths');
-app.use('/api/login', authRoutes);
+app.use('/api', authRoutes);
+app.use('/api', authRoutes);
 
+// Funcionários - IMPORTANTE: usar /api como prefixo
 const funcionarioRoutes = require('./routes/funcionarios');
-app.use('/api/funcionarios', funcionarioRoutes);
+app.use('/api', funcionarioRoutes);
 
+// Posições/Cargos
 const positionRoutes = require('./routes/positions');
-app.use(positionRoutes);
+app.use('/api', positionRoutes);
 
+// Departamentos
 const departmentRoutes = require('./routes/departments');
-app.use(departmentRoutes);
+app.use('/api', departmentRoutes);
 
+// Documentos
 const documentoRoutes = require('./routes/documents');
-app.use(documentoRoutes);
+app.use('/api', documentoRoutes);
 
+// Notícias
 const noticiasRoutes = require('./routes/noticias');
-app.use(noticiasRoutes);
+app.use('/api', noticiasRoutes);
 
+// Usuários
 const usuariosRoutes = require('./routes/usuarios');
-app.use('/api/usuarios', usuariosRoutes);
+app.use('/api', usuariosRoutes);
 
 
-// Pegue a porta do .env
+// ========================
+// ROTA DE HEALTH CHECK
+// ========================
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV
+  });
+});
+
+// ========================
+// INICIALIZAÇÃO DO SERVIDOR
+// ========================
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+  console.log(`📁 Arquivos estáticos: http://localhost:${PORT}/uploads`);
+  console.log(`🏥 Health check: http://localhost:${PORT}/health`);
 });
 

@@ -74,7 +74,7 @@ const verificarEmailExistente = async (email, excludeId = null) => {
 };
 
 // Rota para buscar um funcionário que não tem um usuário
-router.get('/', async (req, res) => {
+router.get('/usuarios2', async (req, res) => {
 
   try {
     const [rows] = await db.query('SELECT * FROM view_usuarios');
@@ -87,7 +87,7 @@ router.get('/', async (req, res) => {
 });
 
 // Rota para buscar um funcionário que não tem um usuário
-router.get('/filtraFuncionario', async (req, res) => {
+router.get('/usuarios2/filtraFuncionario', async (req, res) => {
   
   try {
     const [rows] = await db.query('SELECT * FROM view_select_usuarios');
@@ -113,7 +113,7 @@ router.get('/filtraFuncionario', async (req, res) => {
 })
 
 // Rota para inserir um novo usuário
-router.post('/', upload.single('photo'), async (req, res) => {
+router.post('/usuarios2', upload.single('photo'), async (req, res) => {
   const { name, email, role, status, permissions, id_funcionario } = req.body;
   const photo = req.file ? req.file.filename : null;
 
@@ -164,7 +164,7 @@ router.post('/', upload.single('photo'), async (req, res) => {
 });
 
 // Rota para editar um usuário
-router.put('/:id', upload.single('photo'), async (req, res) => {
+router.put('/usuarios2/:id', upload.single('photo'), async (req, res) => {
   const { id } = req.params;
   const { name, email, role, status } = req.body;
   const photo = req.file ? req.file.filename : req.body.photo;
@@ -202,7 +202,7 @@ router.put('/:id', upload.single('photo'), async (req, res) => {
 });
 
 // Rota específica para atualizar apenas o perfil (foto)
-router.put('/:id/profile', upload.single('photo'), async (req, res) => {
+router.put('/usuarios2/:id/profile', upload.single('photo'), async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -256,7 +256,7 @@ router.put('/:id/profile', upload.single('photo'), async (req, res) => {
 });
 
 // Rota para excluir um usuário
-router.delete('/:id', async (req, res) => {
+router.delete('/usuarios2/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -286,7 +286,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // Rota para excluir um usuário
-router.delete('/:id', async (req, res) => {
+router.delete('/usuarios2/:id', async (req, res) => {
   const { id } = req.params;
 
   try {

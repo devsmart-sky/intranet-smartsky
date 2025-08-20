@@ -25,7 +25,7 @@ export const LoginForm: React.FC = () => {
 
   // SIGN SINGLE SIGN-ON
   function LoginSingleSignon() {
-    window.location.href = "http://localhost:5000/singleSignon";
+    window.location.href = "http://localhost:5000/api/singleSignon";
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
