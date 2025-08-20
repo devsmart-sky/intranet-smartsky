@@ -67,6 +67,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle, title }) => {
     markAsRead(notificationId);
   };
 
+  // Salvar alterações do perfil
   const handleProfileSave = async () => {
     try {
       setIsUpdatingProfile(true);
