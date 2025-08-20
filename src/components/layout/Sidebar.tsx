@@ -216,7 +216,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         src="flash.png"
                         alt="Sienge"
                         className="w-16 h-16 object-contain hover:scale-105 transition-transform"
-                        title="Sistema Sienge"
+                        title="Sistema Flash"
                       />
                     </a>
                     <span className="text-sm mt-2">Flash</span>
